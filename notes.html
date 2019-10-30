@@ -14,6 +14,39 @@
     </nav>
     <br>
     <br>
-    <br>
-    <br>
+    <div class="container">
+        <div class="jumbotron">
+            <form>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Note Title</label>
+                    <input type="email" class="form-control" id="noteTitle" aria-describedby="emailHelp"
+                        placeholder="Note Title">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Note</label>
+                    <input type="password" class="form-control" id="noteBody" placeholder="Notes">
+                </div>
+                <button type="submit" class="btn btn-primary text-right" id="submitBtn">Submit</button>
+            </form>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $("#submitBtn").on("click", (e) => {
+            e.preventDefault();
+            var newNote =
+            {
+                title: $("#noteTitle").val().trim(),
+                body: $("#noteBody").val().trim()
+            }
+
+            $.post("/add", newNote).then((data) => {
+                if (data) {
+                    console.log(data);
+                    alert("Added note!");
+                } else {
+                    console.log("")
+                }
+            })
+        })
+    </script>
 </body>

@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/varunmaster/NoteTaker/issues"
   },
-  "homepage": "https://github.com/varunmaster/NoteTaker#readme"
+  "homepage": "https://github.com/varunmaster/NoteTaker#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
