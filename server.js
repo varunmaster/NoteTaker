@@ -23,7 +23,7 @@ var app = express();
 app.use(express.urlencoded({ extended: true })); //this is boiler plate info and should just be pasted from other server.js files
 app.use(express.json());
 
-require("./routes/apiRoutes")(app);
+require("./routes/apiRoutes")(app, connection);
 require("./routes/htmlRoutes")(app);
 
 app.listen(PORT, function () {

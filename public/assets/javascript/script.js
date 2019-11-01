@@ -50,7 +50,7 @@ $("#submitBtn").on("click", (e) => {
     {
         title: $("#noteTitle").val().trim(),
         body: $("#noteBody").val().trim()
-    }
+    };
 
     $.post("/notes/add", newNote).then((data) => {
         if (data) {

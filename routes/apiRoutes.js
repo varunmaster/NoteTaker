@@ -1,4 +1,4 @@
-module.exports = function (app) {
+module.exports = function (app, connection) {
     var notes = "";
     function getNotesFromDB() {
         connection.query("Select * from notes;", (err, res) => {
