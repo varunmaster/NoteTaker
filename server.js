@@ -1,20 +1,20 @@
 var express = require("express");
 var mysql = require("mysql");
-//var connection = require("./connection.js");
+var connection = require("./connection.js");
 
-var connection = mysql.createConnection({
-    host: "localhost",
-    port: 3306,
-    user: "root",
-    password: "",
-    database: "notetaker_db"
-});
+// var connection = mysql.createConnection({
+//     host: "localhost",
+//     port: 3306,
+//     user: "root",
+//     password: "",
+//     database: "notetaker_db"
+// });
 
-connection.connect(function (err) {
-    if (err) throw err;
-    console.log("connected as id " + connection.threadId + "\n");
-    // connection.end();
-});
+// connection.connect(function (err) {
+//     if (err) throw err;
+//     console.log("connected as id " + connection.threadId + "\n");
+//     // connection.end();
+// });
 
 var PORT = process.env.PORT || 8080;
 
