@@ -20,7 +20,6 @@ function getAllNotes() {
             cardDiv.append(cardBody);
             $("#savedNotes").prepend(cardDiv);
         }
-
     });
 }
 
