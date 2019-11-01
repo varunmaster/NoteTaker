@@ -9,7 +9,7 @@ module.exports = function (app, connection) {
             }
         });
         //connection.end();
-        return;
+        return notes;
     }
 
     function insertNoteToDB(title, body) {
