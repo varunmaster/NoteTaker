@@ -1,6 +1,5 @@
-getAllNotes();
 function getAllNotes() {
-    $.get("/allNotes", (data) => {
+    $.get("/allNotes", function(data) {
         for (var i = 0; i < data.length; i++) {
             var cardDiv = $("<div class='card del'>");
             var cardBody = $("<div class='card-body'>");
@@ -44,7 +43,7 @@ $("#savedNotes").on("click", "#deleteBtn", function () {
     );
 });
 
-$("#submitBtn").on("click", (e) => {
+$("#submitBtn").on("click", function(e) {
     e.preventDefault();
     var newNote =
     {
@@ -52,7 +51,7 @@ $("#submitBtn").on("click", (e) => {
         body: $("#noteBody").val().trim()
     };
 
-    $.post("/notes/add", newNote).then((data) => {
+    $.post("/notes/add", newNote).then(function(data) {
         if (data) {
             console.log(data);
             alert("Added note!");
@@ -65,3 +64,4 @@ $("#submitBtn").on("click", (e) => {
         }
     })
 });
+getAllNotes();
