@@ -1,6 +1,6 @@
 var express = require("express");
 var mysql = require("mysql");
-var connection = require("./connection.js");
+var connection = require("./database/connection.js");
 
 // var connection = mysql.createConnection({
 //     host: "localhost",
