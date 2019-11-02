@@ -1,5 +1,3 @@
-//var moment = require("moment");
-
 function getAllNotes() {
     $.get("/allNotes", function (data) {
         for (var i = 0; i < data.length; i++) {
@@ -18,7 +16,8 @@ function getAllNotes() {
             //cardDiv.append(deleteIcon);
 
             title.text(data[i].title);
-            created.text(data[i].created_at); //put this is moment
+            var momentCreated = moment(data[i].created_at).format("MM/DD/YYYY hh:mm A");
+            created.text(momentCreated); //put this is moment
             para.text(data[i].body);
 
             cardBody.append(title, deleteIcon, editIcon).append(created).append(para);
