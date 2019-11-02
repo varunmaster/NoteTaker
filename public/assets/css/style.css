@@ -1,0 +1,9 @@
+i, button {
+    margin-left: 5px;
+    margin-right: 5px;
+    float: left;
+}
+
+i:hover {
+    cursor: pointer;
+} 

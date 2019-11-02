@@ -14,7 +14,7 @@ module.exports = function (app, connection) {
 
     function insertNoteToDB(title, body) {
         connection.query("INSERT INTO notes (title, body) values (?, ?)", [title, body], (err, res) => {
-            if (err) console.log("err writing to DB: ", err);
+            if (err) res.send(500).end();
             else {
                 console.log("added note to db");
             }
@@ -22,9 +22,30 @@ module.exports = function (app, connection) {
         //connection.end();
     }
 
+    function updateNote(title, body, id) {
+        connection.query("update notes set title = ?, body = ? where id = ?", [title, body, id], (err, res) => {
+            if (err) res.send(500).end();
+            else {
+                console.log("updated note to db");
+            }
+        });
+    }
+
     app.get("/allNotes", (req, res) => {
         getNotesFromDB();
         return res.json(notes);
+    });
+
+    app.get("/notes/:id", (req, res) => {
+        connection.query("Select * from notes where id = ?", [req.params.id], (err, result) => {
+            if (err) res.status(500).end();
+            res.json(result);
+        });
+    });
+
+    app.put("/notes/edit/:id", (req, res) => {
+        updateNote(req.body.title, req.body.body, req.params.id);
+        res.send("updated");
     });
 
     app.delete("/notes/delete/:id", (req, res) => {

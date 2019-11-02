@@ -1,33 +1,36 @@
 //var moment = require("moment");
 
 function getAllNotes() {
-    $.get("/allNotes", function(data) {
+    $.get("/allNotes", function (data) {
         for (var i = 0; i < data.length; i++) {
             var cardDiv = $("<div class='card del'>");
             var cardBody = $("<div class='card-body'>");
             var title = $("<h5 class='card-title'>");
             var created = $("<h6 class='card-subtitle mb-2 text-muted'>");
             var para = $("<p class='card-text'>");
-            var deleteBtn = $("<button type='submit' id='deleteBtn'>")
-            var deleteIcon = $("<i class='fa fa-trash float-right'>");
+            //var deleteBtn = $("<button type='submit' id='deleteBtn'>")
+            var deleteIcon = $("<i class='fas fa-trash-alt float-right text-danger delete-note'>");
+            var editBtn = $("<button type='submit' id='editBtn'>")
+            var editIcon = $("<i class='fas fa-pen float-right text-danger edit-note'>");
             cardDiv.attr("data-id", data[i].id);
-            deleteBtn.append(deleteIcon);
-            cardDiv.append(deleteBtn);
+            //deleteBtn.append(deleteIcon);
+            //cardDiv.append(deleteBtn);
+            //cardDiv.append(deleteIcon);
 
             title.text(data[i].title);
             created.text(data[i].created_at); //put this is moment
             para.text(data[i].body);
 
-            cardBody.append(title).append(created).append(para);
+            cardBody.append(title, deleteIcon, editIcon).append(created).append(para);
             cardDiv.append(cardBody);
             $("#savedNotes").prepend(cardDiv);
         }
     });
 }
 
-$("#savedNotes").on("click", "#deleteBtn", function () {
-    console.log($(this).parents().eq(0).attr("data-id"));
-    var id = $(this).parents().eq(0).attr("data-id");
+$("#savedNotes").on("click", ".delete-note", function () {
+    console.log($(this).parents().eq(1).attr("data-id"));
+    var id = $(this).parents().eq(1).attr("data-id");
 
     $.ajax("/notes/delete/" + id, {
         type: "DELETE"
@@ -44,7 +47,19 @@ $("#savedNotes").on("click", "#deleteBtn", function () {
     );
 });
 
-$("#submitBtn").on("click", function(e) {
+$("#savedNotes").on("click", ".edit-note", function () {
+    var id = $(this).parents().eq(1).attr("data-id");
+    $("#updateBtn").attr("data-id", id);
+
+    $.get("/notes/" + id, function (data) {
+        if (data) {
+            $("#noteTitle").val(data[0].title);
+            $("#noteBody").val(data[0].body);
+        }
+    });
+});
+
+$("#submitBtn").on("click", function (e) {
     e.preventDefault();
     var newNote =
     {
@@ -52,7 +67,7 @@ $("#submitBtn").on("click", function(e) {
         body: $("#noteBody").val().trim()
     };
 
-    $.post("/notes/add", newNote).then(function(data) {
+    $.post("/notes/add", newNote).then(function (data) {
         if (data) {
             console.log(data);
             alert("Added note!");
@@ -65,4 +80,27 @@ $("#submitBtn").on("click", function(e) {
         }
     })
 });
+
+$("#updateBtn").on("click", function (e) {
+    e.preventDefault();
+    var id = $(this).attr("data-id");
+    console.log(id);
+    var updateNote = {
+        title: $("#noteTitle").val().trim(),
+        body: $("#noteBody").val().trim()
+    };
+
+    $.ajax("/notes/edit/" + id, {
+        type: "PUT",
+        data: updateNote
+    }).then(function (data) {
+        if (data) {
+            console.log("updated note");
+            alert("Updated note!");
+            location.reload(true);
+        }
+    });
+    getAllNotes();
+});
+
 getAllNotes();
