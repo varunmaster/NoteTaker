@@ -88,18 +88,23 @@ $("#updateBtn").on("click", function (e) {
         title: $("#noteTitle").val().trim(),
         body: $("#noteBody").val().trim()
     };
+    console.log(updateNote);
 
-    $.ajax("/notes/edit/" + id, {
-        type: "PUT",
-        data: updateNote
-    }).then(function (data) {
-        if (data) {
-            console.log("updated note");
-            alert("Updated note!");
-            location.reload(true);
-        }
-    });
-    getAllNotes();
+    if (!(updateNote.title === "")) {
+        $.ajax("/notes/edit/" + id, {
+            type: "PUT",
+            data: updateNote
+        }).then(function (data) {
+            if (data) {
+                console.log("updated note");
+                alert("Updated note!");
+                location.reload(true);
+            }
+        });
+    } else {
+        alert("Nothing to update! Please select a note to update first.");
+    }
+getAllNotes();
 });
 
 getAllNotes();

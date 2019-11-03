@@ -45,7 +45,9 @@ module.exports = function (app, connection) {
 
     app.put("/notes/edit/:id", (req, res) => {
         updateNote(req.body.title, req.body.body, req.params.id);
-        res.send("updated");
+        if (req.body) {
+            res.send("updated");
+        }
     });
 
     app.delete("/notes/delete/:id", (req, res) => {
