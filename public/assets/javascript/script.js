@@ -66,18 +66,20 @@ $("#submitBtn").on("click", function (e) {
         body: $("#noteBody").val().trim()
     };
 
-    $.post("/notes/add", newNote).then(function (data) {
-        if (data) {
-            console.log(data);
-            alert("Added note!");
-            $("#noteTitle").val('');
-            $("#noteBody").val('');
-            location.reload(true);
-            getAllNotes();
-        } else {
-            console.log("")
-        }
-    })
+    if (newNote.title !== "") {
+        $.post("/notes/add", newNote).then(function (data) {
+            if (data) {
+                console.log(data);
+                alert("Added note!");
+                $("#noteTitle").val('');
+                $("#noteBody").val('');
+                location.reload(true);
+                getAllNotes();
+            }
+        });
+    } else {
+        alert("Cannot submit empty note! Please write a note.");
+    }
 });
 
 $("#updateBtn").on("click", function (e) {
@@ -104,7 +106,7 @@ $("#updateBtn").on("click", function (e) {
     } else {
         alert("Nothing to update! Please select a note to update first.");
     }
-getAllNotes();
+    getAllNotes();
 });
 
 getAllNotes();
