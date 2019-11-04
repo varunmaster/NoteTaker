@@ -114,3 +114,5 @@ $("#updateBtn").on("click", function (e) {
 getAllNotes();
 $("#updateBtn").hide();
 $("#submitBtn").show();
+$("#noteTitle").val('');
+$("#noteBody").val('');
