@@ -47,6 +47,8 @@ $("#savedNotes").on("click", ".delete-note", function () {
 });
 
 $("#savedNotes").on("click", ".edit-note", function () {
+    $("#updateBtn").show();
+    $("#submitBtn").hide();
     var id = $(this).parents().eq(1).attr("data-id");
     $("#updateBtn").attr("data-id", id);
 
@@ -92,7 +94,7 @@ $("#updateBtn").on("click", function (e) {
     };
     console.log(updateNote);
 
-    if (!(updateNote.title === "")) {
+    if (updateNote.title !== "") {
         $.ajax("/notes/edit/" + id, {
             type: "PUT",
             data: updateNote
@@ -110,3 +112,5 @@ $("#updateBtn").on("click", function (e) {
 });
 
 getAllNotes();
+$("#updateBtn").hide();
+$("#submitBtn").show();
